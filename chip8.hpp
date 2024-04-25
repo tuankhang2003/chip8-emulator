@@ -8,6 +8,12 @@ public:
     Chip8();
 
 private:
+    void Table0();
+    void Table8();
+    void TableE();
+    void TableF();
+    void OP_NULL();
+
     void OP_00E0(); // CLS
     void OP_00EE(); // RET
     void OP_1nnn(); // JUMP to nnn
@@ -36,6 +42,7 @@ private:
     void OP_Fx07(); // Set Vx = delay timer value.
     void OP_Fx0A(); // Wait for a key press, store the value of the key in Vx.
     void OP_Fx15(); // Set delay timer = Vx.
+    void OP_Fx18(); // Set sound timer = Vx.
     void OP_Fx1E(); // ADD Index, Vx
     void OP_Fx29(); // Set I = location of sprite for digit Vx.
     void OP_Fx33(); // Store BCD representation of Vx in memory locations I, I+1, and I+2.
@@ -57,4 +64,11 @@ private:
 
     std::default_random_engine ranGen;
     std::uniform_int_distribution<int8_t> randByte;
+
+    typedef void (Chip8::*Chip8Func)();
+    Chip8Func table[0xF + 1];
+    Chip8Func table0[0xE + 1];
+    Chip8Func table8[0xE + 1];
+    Chip8Func tableE[0xE + 1];
+    Chip8Func tableF[0x65 + 1];
 };
