@@ -92,6 +92,25 @@ Chip8::Chip8() : ranGen(std::chrono::system_clock::now().time_since_epoch().coun
     tableF[0x65] = &Chip8::OP_Fx65;
 }
 
+void Chip8::Cycle()
+{
+    // Fetch Intruction (2 Byte)
+    opcode = (memory[pc] << 8u) | memory[pc + 1];
+    pc += 2;
+    // Decode and execute
+    ((*this).*(table[(opcode & 0xF000u) >> 12u]))();
+
+    // Decrement soundtimer
+    if (soundtimer > 0)
+    {
+        soundtimer--;
+    }
+    // Decrement delaytimer
+    if (delaytimer > 0)
+    {
+        delaytimer--;
+    }
+}
 void Chip8::loadROM(char const *path)
 {
     std::ifstream file(path, std::ios::binary | std::ios::ate);
