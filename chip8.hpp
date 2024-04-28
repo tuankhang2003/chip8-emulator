@@ -1,11 +1,20 @@
 #include <cstdint>
 #include <random>
 #include <chrono>
+
+const unsigned int START_ADRESSE = 0x200;
+const unsigned int FONTSET_SIZE = 16 * 5;
+const unsigned int FONTSET_STARTADRESSE = 0x50;
+const unsigned int VIDEO_WIDTH = 64;
+const unsigned int VIDEO_HEIGHT = 32;
 class Chip8
 {
 public:
     void loadROM(char const *path);
     Chip8();
+    void Cycle();
+    uint32_t video[64 * 32]; // 64x32 pixel
+    uint8_t keypad[16]{};    // 16 input key
 
 private:
     void Table0();
@@ -58,8 +67,7 @@ private:
     uint8_t sp{};
     uint8_t delaytimer{};
     uint8_t soundtimer{};
-    uint8_t keypad[16]{};    // 16 input key
-    uint32_t video[64 * 32]; // 64x32 pixel
+
     uint16_t opcode;
 
     std::default_random_engine ranGen;

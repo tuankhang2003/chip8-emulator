@@ -4,11 +4,7 @@
 #include <random>
 #include <chrono>
 #include <cstring>
-const unsigned int START_ADRESSE = 0x200;
-const unsigned int FONTSET_SIZE = 16 * 5;
-const unsigned int FONTSET_STARTADRESSE = 0x50;
-const unsigned int VIDEO_WIDTH = 64;
-const unsigned int VIDEO_HEIGHT = 32;
+
 uint8_t fontset[FONTSET_SIZE] = {
     0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
     0x20, 0x60, 0x20, 0x20, 0x70, // 1
