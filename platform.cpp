@@ -22,7 +22,7 @@ void Platform::Update(void const *buffer, int pitch)
     SDL_RenderCopy(renderer, texture, NULL, NULL);
     SDL_RenderPresent(renderer);
 }
-bool Platform::processInput(uint8_t *key) // KeyDown: KeyPressed   KeyUp: KeyReleased
+bool Platform::ProcessInput(uint8_t *key) // KeyDown: KeyPressed   KeyUp: KeyReleased
 {
     bool quit = false;
     SDL_Event events;

@@ -2,7 +2,8 @@
 # CONFIGURATION BEGIN
 # ---------------------------------------
 
-
+#compile: 
+#> g++ -Isrc/include -Lsrc/lib -o main chip8.cpp platform.cpp  main.cpp -lmingw32 -lSDL2main -lSDL2
 
 # entry point for the program and target name
 MAIN := main.cpp

@@ -6,7 +6,7 @@ public:
     Platform(char const *title, int windowwidth, int windowHeight, int textureWidth, int textureHight);
     ~Platform();
     void Update(void const *buffer, int pitch);
-    bool processInput(uint8_t *key);
+    bool ProcessInput(uint8_t *keys);
 
 private:
     SDL_Window *window{};

@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 
     while (!quit)
     {
-        quit = platform.processInput(chip8.keypad);
+        quit = platform.ProcessInput(chip8.keypad);
         auto currentTime = std::chrono::high_resolution_clock::now();
         float delta = std::chrono::duration<float, std::chrono::milliseconds::period>(currentTime - lastTimeCycle).count();
 

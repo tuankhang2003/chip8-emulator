@@ -145,13 +145,13 @@ void Chip8::OP_1nnn() // JUMP TO nnn
 
 void Chip8::OP_2nnn() // CALL TO nnn
 {
-    uint16_t address = opcode & 0xFFFU;
+    uint16_t address = opcode & 0xFFFu;
     stack[sp++] = pc;
     pc = address;
 }
 void Chip8::OP_3xkk() // SKIP NEXT Instruction if Vx==kk  (SE Vx kk)
 {
-    uint8_t Vx = (opcode & 0x0F00U) >> 8U;
+    uint8_t Vx = (opcode & 0x0F00U) >> 8u;
     uint8_t kk = (opcode & 0x00FFU);
     if (registers[Vx] == kk)
     {
@@ -180,7 +180,7 @@ void Chip8::OP_6xkk() // LD Vx, byte
 {
     uint8_t Vx = (opcode & 0x0F00U) >> 8U;
     uint8_t byte = (opcode & 0x00FFU);
-    registers[Vx] = memory[byte];
+    registers[Vx] = byte;
 }
 void Chip8::OP_7xkk() // ADD VX, byte
 {
@@ -266,8 +266,8 @@ void Chip8::OP_8xy7() // SUBN VX VY
 void Chip8::OP_8xyE()
 {
     uint8_t Vx = (opcode & 0x0F00U) >> 8U;
-    registers[0xF] = registers[Vx] & (0x80U) >> 7U;
-    registers[Vx] >>= 1;
+    registers[0xF] = (registers[Vx] & (0x80U)) >> 7U;
+    registers[Vx] <<= 1;
 }
 void Chip8::OP_9xy0()
 {
@@ -434,7 +434,7 @@ void Chip8::OP_Fx29() // each number hat 5 byte -> z.B. access 2 -> Startadress+
 {
     uint8_t Vx = (opcode & 0x0F00U) >> 8U;
     uint8_t digit = registers[Vx];
-    index = FONTSET_STARTADRESSE + digit * 5;
+    index = FONTSET_STARTADRESSE + (digit * 5);
 }
 void Chip8::OP_Fx33()
 {

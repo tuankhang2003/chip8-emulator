@@ -7,21 +7,25 @@ const unsigned int FONTSET_SIZE = 16 * 5;
 const unsigned int FONTSET_STARTADRESSE = 0x50;
 const unsigned int VIDEO_WIDTH = 64;
 const unsigned int VIDEO_HEIGHT = 32;
+const unsigned int KEY_COUNT = 16;
+const unsigned int MEMORY_SIZE = 4096;
+const unsigned int REGISTER_COUNT = 4096;
+
 class Chip8
 {
 public:
     void loadROM(char const *path);
     Chip8();
     void Cycle();
-    uint32_t video[64 * 32]; // 64x32 pixel
-    uint8_t keypad[16]{};    // 16 input key
+    uint32_t video[VIDEO_HEIGHT * VIDEO_WIDTH]; // 64x32 pixel
+    uint8_t keypad[KEY_COUNT]{};                // 16 input key
 
 private:
     void Table0();
     void Table8();
     void TableE();
     void TableF();
-    void OP_NULL();
+    void OP_NULL(); // DO Nothing
 
     void OP_00E0(); // CLS
     void OP_00EE(); // RET
@@ -59,19 +63,15 @@ private:
     void OP_Fx55(); // Store registers V0 through Vx in memory starting at location I.
     void OP_Fx65(); // Read registers V0 through Vx from memory starting at location I.
 
-    uint8_t registers[16]{}; // 16 REGISTER 8 BIT
-    uint8_t memory[4096]{};  // 4KiB MEMORY
-    uint16_t index{};        // 16BIT IndexRegister, special register to store memory adresses for use
+    uint8_t registers[REGISTER_COUNT]{}; // 16 REGISTER 8 BIT
+    uint8_t memory[MEMORY_SIZE]{};       // 4KiB MEMORY
+    uint16_t index{};                    // 16BIT IndexRegister, special register to store memory adresses for use
     uint16_t pc{};
     uint16_t stack[16]{};
     uint8_t sp{};
     uint8_t delaytimer{};
     uint8_t soundtimer{};
-
     uint16_t opcode;
-
-    std::default_random_engine ranGen;
-    std::uniform_int_distribution<int8_t> randByte;
 
     typedef void (Chip8::*Chip8Func)();
     Chip8Func table[0xF + 1];
@@ -79,4 +79,7 @@ private:
     Chip8Func table8[0xE + 1];
     Chip8Func tableE[0xE + 1];
     Chip8Func tableF[0x65 + 1];
+
+    std::default_random_engine ranGen;
+    std::uniform_int_distribution<int8_t> randByte;
 };
