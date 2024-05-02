@@ -32,7 +32,7 @@ Chip8::Chip8() : ranGen(std::chrono::system_clock::now().time_since_epoch().coun
     {
         memory[i + FONTSET_STARTADRESSE] = fontset[i];
     }
-    randByte = std::uniform_int_distribution<int8_t>(0, 255); // Random Generator
+    randByte = std::uniform_int_distribution<int8_t>(0, 255U); // Random Generator
 
     table[0x0] = &Chip8::Table0;
     table[0x1] = &Chip8::OP_1nnn;
@@ -135,7 +135,8 @@ void Chip8::OP_00E0() // Clear the Display (CLS)
 }
 void Chip8::OP_00EE() // RET
 {
-    pc = stack[--sp];
+    sp--;
+    pc = stack[sp];
 }
 void Chip8::OP_1nnn() // JUMP TO nnn
 {
@@ -227,7 +228,7 @@ void Chip8::OP_8xy4() // ADD VX VY  Set Vx = Vx + Vy, set VF = carry.
     {
         registers[0xF] = 0;
     }
-    registers[Vx] = sum & 0xFFU;
+    registers[Vx] = sum & 0xFFu;
 }
 void Chip8::OP_8xy5() // SUB VX VY
 {
