@@ -6,7 +6,7 @@ Platform::Platform(char const *title, int windowwidth, int windowHeight, int tex
     SDL_Init(SDL_INIT_VIDEO);
     window = SDL_CreateWindow(title, 0, 0, windowwidth, windowHeight, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED); // REnderer_accelerated: speed up Hardware
-    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STATIC, textureWidth, textureHight);
+    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, textureWidth, textureHight);
 }
 Platform::~Platform()
 {
@@ -17,9 +17,9 @@ Platform::~Platform()
 }
 void Platform::Update(void const *buffer, int pitch)
 {
-    SDL_UpdateTexture(texture, NULL, buffer, pitch); // NULL: Update the entire Texture
+    SDL_UpdateTexture(texture, nullptr, buffer, pitch); // NULL: Update the entire Texture
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, texture, NULL, NULL);
+    SDL_RenderCopy(renderer, texture, nullptr, nullptr);
     SDL_RenderPresent(renderer);
 }
 bool Platform::ProcessInput(uint8_t *key) // KeyDown: KeyPressed   KeyUp: KeyReleased
@@ -92,60 +92,60 @@ bool Platform::ProcessInput(uint8_t *key) // KeyDown: KeyPressed   KeyUp: KeyRel
                 key[0xF] = 1;
                 break;
             }
+            break;
         }
-        break;
 
         case SDL_KEYUP:
             switch (events.key.keysym.sym)
             {
             case SDLK_x:
-                key[0] = 1;
+                key[0] = 0;
                 break;
             case SDLK_1:
-                key[1] = 1;
+                key[1] = 0;
                 break;
             case SDLK_2:
-                key[2] = 1;
+                key[2] = 0;
                 break;
 
             case SDLK_3:
-                key[3] = 1;
+                key[3] = 0;
                 break;
             case SDLK_q:
-                key[4] = 1;
+                key[4] = 0;
                 break;
             case SDLK_w:
-                key[5] = 1;
+                key[5] = 0;
                 break;
             case SDLK_e:
-                key[6] = 1;
+                key[6] = 0;
                 break;
             case SDLK_a:
-                key[7] = 1;
+                key[7] = 0;
                 break;
             case SDLK_s:
-                key[8] = 1;
+                key[8] = 0;
                 break;
             case SDLK_d:
-                key[9] = 1;
+                key[9] = 0;
                 break;
             case SDLK_z:
-                key[0xA] = 1;
+                key[0xA] = 0;
                 break;
             case SDLK_c:
-                key[0xB] = 1;
+                key[0xB] = 0;
                 break;
             case SDLK_4:
-                key[0xC] = 1;
+                key[0xC] = 0;
                 break;
             case SDLK_r:
-                key[0xD] = 1;
+                key[0xD] = 0;
                 break;
             case SDLK_f:
-                key[0xE] = 1;
+                key[0xE] = 0;
                 break;
             case SDLK_v:
-                key[0xF] = 1;
+                key[0xF] = 0;
                 break;
             }
             break;
